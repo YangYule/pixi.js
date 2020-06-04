@@ -1,10 +1,12 @@
 import { ArrayResource } from './ArrayResource';
-import { Resource } from './Resource';
 import { TARGETS } from '@pixi/constants';
-import { ISize } from '@pixi/math';
-import { ArrayFixed } from '@pixi/utils';
 
-import { BaseTexture, Renderer, GLTexture } from '@pixi/core';
+import type { Resource } from './Resource';
+import type { ISize } from '@pixi/math';
+import type { ArrayFixed } from '@pixi/utils';
+import type { BaseTexture } from '../BaseTexture';
+import type { Renderer } from '../../Renderer';
+import type { GLTexture } from '../GLTexture';
 
 /**
  * Constructor options for CubeResource
@@ -20,7 +22,7 @@ export interface ICubeResourceOptions extends ISize
  * @class
  * @extends PIXI.resources.ArrayResource
  * @memberof PIXI.resources
- * @param {Array<string|PIXI.resources.Resource>} [source] Collection of URLs or resources
+ * @param {Array<string|PIXI.resources.Resource>} [source] - Collection of URLs or resources
  *        to use as the sides of the cube.
  * @param {object} [options] - ImageResource options
  * @param {number} [options.width] - Width of resource

@@ -1,8 +1,10 @@
-import { Program, Shader, Texture, TextureMatrix } from '@pixi/core';
+import { Program, Shader, TextureMatrix } from '@pixi/core';
 import { Matrix } from '@pixi/math';
 import { premultiplyTintToRgba } from '@pixi/utils';
 import fragment from './shader/mesh.frag';
 import vertex from './shader/mesh.vert';
+
+import type { Texture } from '@pixi/core';
 
 export interface IMeshMaterialOptions {
     alpha?: number;
@@ -11,6 +13,9 @@ export interface IMeshMaterialOptions {
     program?: Program;
     uniforms?: {};
 }
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface MeshMaterial extends GlobalMixins.MeshMaterial {}
 
 /**
  * Slightly opinionated default shader for PixiJS 2D objects.

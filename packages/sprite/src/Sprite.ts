@@ -1,14 +1,20 @@
 import { BLEND_MODES } from '@pixi/constants';
-import { IBaseTextureOptions, Renderer, Texture, TextureSource } from '@pixi/core';
-import { Container, IDestroyOptions } from '@pixi/display';
-import { IPoint, ObservablePoint, Point, Rectangle } from '@pixi/math';
+import { Texture } from '@pixi/core';
+import { Container } from '@pixi/display';
+import { ObservablePoint, Point, Rectangle } from '@pixi/math';
 import { settings } from '@pixi/settings';
 import { sign } from '@pixi/utils';
+
+import type { IBaseTextureOptions, Renderer, TextureSource } from '@pixi/core';
+import type { IDestroyOptions } from '@pixi/display';
+import type { IPoint } from '@pixi/math';
 
 const tempPoint = new Point();
 const indices = new Uint16Array([0, 1, 2, 0, 2, 3]);
 
 export type SpriteSource = TextureSource|Texture;
+
+export interface Sprite extends GlobalMixins.Sprite, Container {}
 
 /**
  * The Sprite object is the base for all textured objects that are rendered to the screen
@@ -40,15 +46,13 @@ export class Sprite extends Container
 {
     public blendMode: BLEND_MODES;
     public indices: Uint16Array;
-    public size: number;
-    public start: number;
     public pluginName: string;
 
     _width: number;
     _height: number;
     _texture: Texture;
-    protected _cachedTint: number;
-    protected _textureID: number;
+    _textureID: number;
+    _cachedTint: number;
     protected _textureTrimmedID: number;
     protected uvs: Float32Array;
     protected _anchor: ObservablePoint;
@@ -62,7 +66,7 @@ export class Sprite extends Container
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    private _tintRGB: number;
+    _tintRGB: number;
 
     /**
      * @param {PIXI.Texture} [texture] - The texture for this sprite.
@@ -196,8 +200,6 @@ export class Sprite extends Container
         // Batchable stuff..
         // TODO could make this a mixin?
         this.indices = indices;
-        this.size = 4;
-        this.start = 0;
 
         /**
          * Plugin that is responsible for rendering this element.
@@ -536,8 +538,8 @@ export class Sprite extends Container
      * The source can be - frame id, image url, video url, canvas element, video element, base texture
      *
      * @static
-     * @param {string|PIXI.Texture|HTMLCanvasElement|HTMLVideoElement} source Source to create texture from
-     * @param {object} [options] See {@link PIXI.BaseTexture}'s constructor for options.
+     * @param {string|PIXI.Texture|HTMLCanvasElement|HTMLVideoElement} source - Source to create texture from
+     * @param {object} [options] - See {@link PIXI.BaseTexture}'s constructor for options.
      * @return {PIXI.Sprite} The newly created sprite
      */
     static from(source: SpriteSource, options: IBaseTextureOptions): Sprite

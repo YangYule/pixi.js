@@ -1,10 +1,15 @@
-import { Renderer, Texture, TextureMatrix, TextureSource, IBaseTextureOptions } from '@pixi/core';
-import { IDestroyOptions } from '@pixi/display';
-import { IPoint, Point, Rectangle, Transform, ObservablePoint, ISize } from '@pixi/math';
+import { Texture, TextureMatrix } from '@pixi/core';
+import { Point, Rectangle, Transform  } from '@pixi/math';
 import { Sprite } from '@pixi/sprite';
 import { deprecation } from '@pixi/utils';
+import type { Renderer, IBaseTextureOptions, TextureSource } from '@pixi/core';
+import type { IDestroyOptions } from '@pixi/display';
+import type { IPoint, ISize, ObservablePoint } from '@pixi/math';
 
 const tempPoint = new Point();
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface TilingSprite extends GlobalMixins.TilingSprite {}
 
 /**
  * A tiling sprite is a fast way of rendering a tiling image

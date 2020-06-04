@@ -1,10 +1,15 @@
 import { System } from '../System';
 import { GLBuffer } from './GLBuffer';
-import { ENV, DRAW_MODES } from '@pixi/constants';
+import { ENV } from '@pixi/constants';
 import { settings } from '../settings';
 
-import { Renderer, IRenderingContext, Geometry, Shader, Program } from '@pixi/core';
-import { Buffer } from './Buffer';
+import type { DRAW_MODES } from '@pixi/constants';
+import type { Renderer } from '../Renderer';
+import type { IRenderingContext } from '../IRenderingContext';
+import type { Geometry } from './Geometry';
+import type { Shader } from '../shader/Shader';
+import type { Program } from '../shader/Program';
+import type { Buffer } from './Buffer';
 
 const byteSizeMap: {[key: number]: number} = { 5126: 4, 5123: 2, 5121: 1 };
 
@@ -149,8 +154,8 @@ export class GeometrySystem extends System
     /**
      * Binds geometry so that is can be drawn. Creating a Vao if required
      *
-     * @param {PIXI.Geometry} geometry instance of geometry to bind
-     * @param {PIXI.Shader} [shader] instance of shader to use vao for
+     * @param {PIXI.Geometry} geometry - instance of geometry to bind
+     * @param {PIXI.Shader} [shader] - instance of shader to use vao for
      */
     bind(geometry?: Geometry, shader?: Shader): void
     {
@@ -275,8 +280,8 @@ export class GeometrySystem extends System
     /**
      * Takes a geometry and program and generates a unique signature for them.
      *
-     * @param {PIXI.Geometry} geometry to get signature from
-     * @param {PIXI.Program} program to test geometry against
+     * @param {PIXI.Geometry} geometry - to get signature from
+     * @param {PIXI.Program} program - to test geometry against
      * @returns {String} Unique signature of the geometry and program
      * @protected
      */
@@ -413,8 +418,8 @@ export class GeometrySystem extends System
 
     /**
      * Disposes buffer
-     * @param {PIXI.Buffer} buffer buffer with data
-     * @param {boolean} [contextLost=false] If context was lost, we suppress deleteVertexArray
+     * @param {PIXI.Buffer} buffer - buffer with data
+     * @param {boolean} [contextLost=false] - If context was lost, we suppress deleteVertexArray
      */
     disposeBuffer(buffer: Buffer, contextLost?: boolean): void
     {
@@ -445,8 +450,8 @@ export class GeometrySystem extends System
 
     /**
      * Disposes geometry
-     * @param {PIXI.Geometry} geometry Geometry with buffers. Only VAO will be disposed
-     * @param {boolean} [contextLost=false] If context was lost, we suppress deleteVertexArray
+     * @param {PIXI.Geometry} geometry - Geometry with buffers. Only VAO will be disposed
+     * @param {boolean} [contextLost=false] - If context was lost, we suppress deleteVertexArray
      */
     disposeGeometry(geometry: Geometry, contextLost?: boolean): void
     {
@@ -502,7 +507,7 @@ export class GeometrySystem extends System
 
     /**
      * dispose all WebGL resources of all managed geometries and buffers
-     * @param {boolean} [contextLost=false] If context was lost, we suppress `gl.delete` calls
+     * @param {boolean} [contextLost=false] - If context was lost, we suppress `gl.delete` calls
      */
     disposeAll(contextLost?: boolean): void
     {

@@ -1,7 +1,8 @@
 import { System } from '../System';
-import { Rectangle, Matrix } from '@pixi/math';
+import { Matrix } from '@pixi/math';
 
-import { Renderer } from '@pixi/core';
+import type { Rectangle } from '@pixi/math';
+import type { Renderer } from '../Renderer';
 
 /**
  * System plugin to the renderer to manage the projection matrix.
@@ -105,26 +106,16 @@ export class ProjectionSystem extends System
     calculateProjection(destinationFrame: Rectangle, sourceFrame: Rectangle, resolution: number, root: boolean): void
     {
         const pm = this.projectionMatrix;
+        const sign = !root ? 1 : -1;
 
         // I don't think we will need this line..
         // pm.identity();
 
-        if (!root)
-        {
-            pm.a = (1 / destinationFrame.width * 2) * resolution;
-            pm.d = (1 / destinationFrame.height * 2) * resolution;
+        pm.a = (1 / destinationFrame.width * 2) * resolution;
+        pm.d = sign * (1 / destinationFrame.height * 2) * resolution;
 
-            pm.tx = -1 - (sourceFrame.x * pm.a);
-            pm.ty = -1 - (sourceFrame.y * pm.d);
-        }
-        else
-        {
-            pm.a = (1 / destinationFrame.width * 2) * resolution;
-            pm.d = (-1 / destinationFrame.height * 2) * resolution;
-
-            pm.tx = -1 - (sourceFrame.x * pm.a);
-            pm.ty = 1 - (sourceFrame.y * pm.d);
-        }
+        pm.tx = -1 - (sourceFrame.x * pm.a);
+        pm.ty = -sign - (sourceFrame.y * pm.d);
     }
 
     /**
@@ -132,7 +123,9 @@ export class ProjectionSystem extends System
      *
      * @param {PIXI.Matrix} matrix - The transformation matrix
      */
-    setTransform(): void // matrix)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    setTransform(matrix: Matrix): void // eslint-disable-line @typescript-eslint/no-unused-vars
     {
         // this._activeRenderTarget.transform = matrix;
     }

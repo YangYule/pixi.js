@@ -1,6 +1,8 @@
 import { Runner } from '@pixi/runner';
 
-import { BaseTexture, Renderer, GLTexture } from '@pixi/core';
+import type { BaseTexture } from '../BaseTexture';
+import type { Renderer } from '../../Renderer';
+import type { GLTexture } from '../GLTexture';
 
 /**
  * Base resource class for textures that manages validation and uploading, depending on its type.
@@ -20,8 +22,8 @@ export abstract class Resource
     protected onUpdate: Runner;
     protected onError: Runner;
     /**
-     * @param {number} [width=0] Width of the resource
-     * @param {number} [height=0] Height of the resource
+     * @param {number} [width=0] - Width of the resource
+     * @param {number} [height=0] - Height of the resource
      */
     constructor(width = 0, height = 0)
     {
@@ -117,8 +119,8 @@ export abstract class Resource
 
     /**
      * Trigger a resize event
-     * @param {number} width X dimension
-     * @param {number} height Y dimension
+     * @param {number} width - X dimension
+     * @param {number} height - Y dimension
      */
     resize(width: number, height: number): void
     {

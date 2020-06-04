@@ -1,4 +1,4 @@
-import { BaseTexture, IBaseTextureOptions, ImageSource } from './BaseTexture';
+import { BaseTexture } from './BaseTexture';
 import { ImageResource } from './resources/ImageResource';
 import { CanvasResource } from './resources/CanvasResource';
 import { TextureUvs } from './TextureUvs';
@@ -6,11 +6,14 @@ import { settings } from '@pixi/settings';
 import { Rectangle, Point } from '@pixi/math';
 import { uid, TextureCache, getResolutionOfUrl, EventEmitter } from '@pixi/utils';
 
-import { TextureMatrix } from './TextureMatrix';
+import type { IBaseTextureOptions, ImageSource } from './BaseTexture';
+import type { TextureMatrix } from './TextureMatrix';
 
 const DEFAULT_UVS = new TextureUvs();
 
 export type TextureSource = string|BaseTexture|ImageSource;
+
+export interface Texture extends GlobalMixins.Texture, EventEmitter {}
 
 /**
  * A texture stores the information that represents an image or part of an image.
@@ -265,7 +268,7 @@ export class Texture extends EventEmitter
     /**
      * Destroys this texture
      *
-     * @param {boolean} [destroyBase=false] Whether to destroy the base texture as well
+     * @param {boolean} [destroyBase=false] - Whether to destroy the base texture as well
      */
     destroy(destroyBase?: boolean): void
     {
@@ -285,6 +288,7 @@ export class Texture extends EventEmitter
                 this.baseTexture.destroy();
             }
 
+            this.baseTexture.off('loaded', this.onBaseTextureUpdated, this);
             this.baseTexture.off('update', this.onBaseTextureUpdated, this);
 
             this.baseTexture = null;
@@ -308,7 +312,13 @@ export class Texture extends EventEmitter
      */
     clone(): Texture
     {
-        return new Texture(this.baseTexture, this.frame, this.orig, this.trim, this.rotate, this.defaultAnchor);
+        return new Texture(this.baseTexture,
+            this.frame.clone(),
+            this.orig.clone(),
+            this.trim && this.trim.clone(),
+            this.rotate,
+            this.defaultAnchor
+        );
     }
 
     /**
@@ -335,7 +345,7 @@ export class Texture extends EventEmitter
      * @param {string|HTMLImageElement|HTMLCanvasElement|HTMLVideoElement|PIXI.BaseTexture} source
      *        Source to create texture from
      * @param {object} [options] See {@link PIXI.BaseTexture}'s constructor for options.
-     * @param {boolean} [strict] Enforce strict-mode, see {@link PIXI.settings.STRICT_TEXTURE_CACHE}.
+     * @param {boolean} [strict] - Enforce strict-mode, see {@link PIXI.settings.STRICT_TEXTURE_CACHE}.
      * @return {PIXI.Texture} The newly created texture
      */
     static from(source: TextureSource, options: IBaseTextureOptions = {},
@@ -388,7 +398,7 @@ export class Texture extends EventEmitter
      * Create a new Texture with a BufferResource from a Float32Array.
      * RGBA values are floats from 0 to 1.
      * @static
-     * @param {Float32Array|Uint8Array} buffer The optional array to use, if no data
+     * @param {Float32Array|Uint8Array} buffer - The optional array to use, if no data
      *        is provided, a new Float32Array is created.
      * @param {number} width - Width of the resource
      * @param {number} height - Height of the resource
@@ -477,7 +487,7 @@ export class Texture extends EventEmitter
      * @param {string|PIXI.Texture} texture - id of a Texture to be removed, or a Texture instance itself
      * @return {PIXI.Texture|null} The Texture that was removed
      */
-    static removeFromCache(texture: Texture): Texture|null
+    static removeFromCache(texture: string|Texture): Texture|null
     {
         if (typeof texture === 'string')
         {

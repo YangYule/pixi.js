@@ -1,7 +1,8 @@
-import { IPoint } from './IPoint';
 import { Point } from './Point';
 import { PI_2 } from './const';
-import { Transform } from './Transform';
+
+import type { Transform } from './Transform';
+import type { IPoint } from './IPoint';
 
 /**
  * The PixiJS Matrix as a class makes it a lot faster.
@@ -210,8 +211,8 @@ export class Matrix
     /**
      * Translates the matrix on the x and y.
      *
-     * @param {number} x How much to translate x by
-     * @param {number} y How much to translate y by
+     * @param {number} x - How much to translate x by
+     * @param {number} y - How much to translate y by
      * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
      */
     translate(x: number, y: number): this
@@ -225,8 +226,8 @@ export class Matrix
     /**
      * Applies a scale transformation to the matrix.
      *
-     * @param {number} x The amount to scale horizontally
-     * @param {number} y The amount to scale vertically
+     * @param {number} x - The amount to scale horizontally
+     * @param {number} y - The amount to scale vertically
      * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
      */
     scale(x: number, y: number): this

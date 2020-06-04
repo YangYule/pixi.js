@@ -1,4 +1,6 @@
-import { Rectangle, IPoint, Transform, Matrix } from '@pixi/math';
+import { Rectangle } from '@pixi/math';
+
+import type { IPoint, Transform, Matrix } from '@pixi/math';
 
 /**
  * 'Builder' pattern for bounds rectangles.
@@ -370,8 +372,8 @@ export class Bounds
     /**
      * Adds other Bounds, multiplied by matrix. Bounds shouldn't be empty.
      *
-     * @param {PIXI.Bounds} bounds other bounds
-     * @param {PIXI.Matrix} matrix multiplicator
+     * @param {PIXI.Bounds} bounds - other bounds
+     * @param {PIXI.Matrix} matrix - multiplicator
      */
     addBoundsMatrix(bounds: Bounds, matrix: Matrix): void
     {

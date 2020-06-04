@@ -1,4 +1,4 @@
-import { ObjectRenderer, Shader, State, QuadUv, Renderer } from '@pixi/core';
+import { ObjectRenderer, Shader, State, QuadUv } from '@pixi/core';
 import { WRAP_MODES } from '@pixi/constants';
 import { Matrix } from '@pixi/math';
 import { premultiplyTintToRgba, correctBlendMode } from '@pixi/utils';
@@ -6,7 +6,9 @@ import { premultiplyTintToRgba, correctBlendMode } from '@pixi/utils';
 import vertex from './tilingSprite.vert';
 import fragment from './tilingSprite.frag';
 import fragmentSimple from './tilingSprite_simple.frag';
-import { TilingSprite } from './TilingSprite';
+
+import type { Renderer } from '@pixi/core';
+import type { TilingSprite } from './TilingSprite';
 
 const tempMat = new Matrix();
 
@@ -27,7 +29,7 @@ export class TilingSpriteRenderer extends ObjectRenderer
     /**
      * constructor for renderer
      *
-     * @param {PIXI.Renderer} renderer The renderer this tiling awesomeness works for.
+     * @param {PIXI.Renderer} renderer - The renderer this tiling awesomeness works for.
      */
     constructor(renderer: Renderer)
     {
@@ -52,7 +54,7 @@ export class TilingSpriteRenderer extends ObjectRenderer
 
     /**
      *
-     * @param {PIXI.TilingSprite} ts tilingSprite to be rendered
+     * @param {PIXI.TilingSprite} ts - tilingSprite to be rendered
      */
     public render(ts: TilingSprite): void
     {

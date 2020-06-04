@@ -1,6 +1,8 @@
 import { url } from '@pixi/utils';
 import { Spritesheet } from './Spritesheet';
-import { LoaderResource, Loader, ILoaderResource } from '@pixi/loaders';
+import { LoaderResource } from '@pixi/loaders';
+import type { Loader, ILoaderResource } from '@pixi/loaders';
+
 /**
  * {@link PIXI.Loader Loader} middleware for loading texture atlases that have been created with
  * TexturePacker or similar JSON-based spritesheet.
@@ -56,7 +58,7 @@ export class SpritesheetLoader
             }
 
             const spritesheet = new Spritesheet(
-                res.texture.baseTexture,
+                res.texture,
                 resource.data,
                 resource.url
             );
@@ -75,7 +77,7 @@ export class SpritesheetLoader
      * @param {PIXI.LoaderResource} resource - Resource to check path
      * @param {string} baseUrl - Base root url
      */
-    private static getResourcePath(resource: any, baseUrl: string): string
+    static getResourcePath(resource: any, baseUrl: string): string
     {
         // Prepend url path unless the resource image is a data url
         if (resource.isDataUrl)

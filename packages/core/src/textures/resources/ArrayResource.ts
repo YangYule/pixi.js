@@ -1,11 +1,12 @@
 import { Resource } from './Resource';
-import { BaseImageResource } from './BaseImageResource';
-import { BaseTexture } from '../BaseTexture';
-import { Renderer } from '../../Renderer';
-import { GLTexture } from '../GLTexture';
 import { TARGETS } from '@pixi/constants';
+import { BaseTexture } from '../BaseTexture';
 import { autoDetectResource } from './autoDetectResource';
-import { ISize } from '@pixi/math';
+
+import type { BaseImageResource } from './BaseImageResource';
+import type { Renderer } from '../../Renderer';
+import type { GLTexture } from '../GLTexture';
+import type { ISize } from '@pixi/math';
 
 /**
  * A resource that contains a number of sources.
@@ -15,7 +16,7 @@ import { ISize } from '@pixi/math';
  * @memberof PIXI.resources
  * @param {number|Array<*>} source - Number of items in array or the collection
  *        of image URLs to use. Can also be resources, image elements, canvas, etc.
- * @param {object} [options] Options to apply to {@link PIXI.resources.autoDetectResource}
+ * @param {object} [options] - Options to apply to {@link PIXI.resources.autoDetectResource}
  * @param {number} [options.width] - Width of the resource
  * @param {number} [options.height] - Height of the resource
  */

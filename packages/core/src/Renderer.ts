@@ -1,4 +1,4 @@
-import { AbstractRenderer, IRendererOptions, IRendererPlugins } from './AbstractRenderer';
+import { AbstractRenderer } from './AbstractRenderer';
 import { sayHello, isWebGLSupported } from '@pixi/utils';
 import { MaskSystem } from './mask/MaskSystem';
 import { StencilSystem } from './mask/StencilSystem';
@@ -19,15 +19,15 @@ import { UniformGroup } from './shader/UniformGroup';
 import { Matrix } from '@pixi/math';
 import { Runner } from '@pixi/runner';
 
-// import types
-import { RenderTexture } from './renderTexture/RenderTexture';
-import { DisplayObject } from '@pixi/display';
-import { System } from './System';
-import { IRenderingContext } from './IRenderingContext';
-import { Extract } from '@pixi/extract';
+import type { IRendererOptions, IRendererPlugins } from './AbstractRenderer';
+import type { RenderTexture } from './renderTexture/RenderTexture';
+import type { DisplayObject } from '@pixi/display';
+import type { System } from './System';
+import type { IRenderingContext } from './IRenderingContext';
+import type { Extract } from '@pixi/extract';
 
 export interface IRendererPluginConstructor {
-    new (renderer: Renderer): IRendererPlugin;
+    new (renderer: Renderer, options?: any): IRendererPlugin;
 }
 
 export interface IRendererPlugin {
@@ -78,7 +78,7 @@ export class Renderer extends AbstractRenderer
      * @static
      * @private
      */
-    static create(options: any): Renderer
+    static create(options: IRendererOptions): AbstractRenderer
     {
         if (isWebGLSupported())
         {
@@ -98,8 +98,6 @@ export class Renderer extends AbstractRenderer
      *   resolutions other than 1.
      * @param {boolean} [options.antialias=false] - Sets antialias. If not available natively then FXAA
      *  antialiasing is used.
-     * @param {boolean} [options.forceFXAA=false] - Forces FXAA antialiasing to be used over native.
-     *  FXAA is faster, but may not always look as great.
      * @param {number} [options.resolution=1] - The resolution / device pixel ratio of the renderer.
      *  The resolution of the renderer retina would be 2.
      * @param {boolean} [options.clearBeforeRender=true] - This sets if the renderer will clear
@@ -111,7 +109,8 @@ export class Renderer extends AbstractRenderer
      *  (shown if not transparent).
      * @param {string} [options.powerPreference] - Parameter passed to WebGL context, set to "high-performance"
      *  for devices with dual graphics card.
-     * @param {object} [options.context] If WebGL context already exists, all parameters must be taken from it.
+     * @param {object} [options.context] - If WebGL context already exists, all parameters must be taken from it.
+     * @public
      */
     constructor(options? : IRendererOptions)
     {
@@ -487,7 +486,7 @@ export class Renderer extends AbstractRenderer
      * @property {PIXI.accessibility.AccessibilityManager} accessibility Support tabbing interactive elements.
      * @property {PIXI.extract.Extract} extract Extract image data from renderer.
      * @property {PIXI.interaction.InteractionManager} interaction Handles mouse, touch and pointer events.
-     * @property {PIXI.prepare.Prepare} prepare Pre-render display objects.
+     * @property {PIXI.Prepare} prepare Pre-render display objects.
      */
 
     static __plugins: IRendererPlugins;
